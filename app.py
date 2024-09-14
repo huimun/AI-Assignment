@@ -71,13 +71,16 @@ st.title("Salary Prediction App")
 
 # Input fields for user to provide data
 age = st.slider("Age", 18, 65, 25)  # Slider for age selection
+st.write(f"Selected Age: {age}")  # Ensure age is being captured
+
 gender = st.selectbox("Gender", ["Male", "Female"])  # Dropdown for gender selection
-education_level = st.selectbox("Education Level", ["Bachelor's", "Master's", "PhD"])  # Adjusted education levels
+education_level = st.selectbox("Education Level", ["Bachelor's", "Master's", "PhD"])  # Dropdown for education level
 job_title = st.selectbox("Job Title", job_titles)  # Dropdown for job title selection
-years_of_experience = st.slider("Years of Experience", 0, 40, 5)  # Slider for experience selection
+years_of_experience = st.slider("Years of Experience", 0, 40, 5)  # Slider for years of experience
 
 # Prediction button
 if st.button("Predict Salary"):
+    st.write(f"Age: {age}, Gender: {gender}, Education Level: {education_level}, Job Title: {job_title}, Years of Experience: {years_of_experience}")
     salary = predict_salary(age, gender, education_level, job_title, years_of_experience)
     if salary:
         st.write(f"Predicted Salary: ${salary:,.2f}")
