@@ -37,3 +37,5 @@ years_of_experience = st.slider("Years of Experience", 0, 40, 5)  # Slider for e
 if st.button("Predict Salary"):
     salary = predict_salary(age, gender, education_level, job_title, years_of_experience)
     st.write(f"Predicted Salary: ${salary:,.2f}")
+
+pip install streamlit joblib pandas scikit-learn
