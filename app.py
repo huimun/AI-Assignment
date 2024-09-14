@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from sklearn.preprocessing import LabelEncoder
 
 # List of unique job titles
 job_titles = [
@@ -54,19 +55,24 @@ except Exception as e:
 gender_map = {'Male': 0, 'Female': 1}
 education_level_map = {"Bachelor's": 0, "Master's": 1, "PhD": 2}
 
+# Label encoding for job titles
+label_encoder = LabelEncoder()
+label_encoder.fit(job_titles)
+
 # Function to make prediction
 def predict_salary(age, gender, education_level, job_title, years_of_experience):
     try:
         # Convert categorical variables into numeric values
         gender_encoded = gender_map[gender]
         education_level_encoded = education_level_map[education_level]
+        job_title_encoded = label_encoder.transform([job_title])[0]  # Encode the selected job title
         
-        # Input data (ensure job title is handled if needed)
+        # Input data
         input_data = pd.DataFrame({
             'Age': [age],
             'Gender': [gender_encoded],
             'Education Level': [education_level_encoded],
-            'Job Title': [job_title],  # Keep this as the raw string if your model handles text encoding
+            'Job Title': [job_title_encoded],
             'Years of Experience': [years_of_experience]
         })
 
