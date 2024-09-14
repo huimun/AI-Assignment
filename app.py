@@ -80,7 +80,11 @@ years_of_experience = st.slider("Years of Experience", 0, 40, 5)  # Slider for y
 
 # Prediction button
 if st.button("Predict Salary"):
-    st.write(f"Age: {age}+Gender: {gender}+Education Level: {education_level}+Job Title: {job_title}+Years of Experience: {years_of_experience}")
+    st.write(f"Age: {age}")
+    st.write(f"Gender: {gender}")
+    st.write(f"Education Level: {education_level}")
+    st.write(f"Job Title: {job_title}")
+    st.write(f"Years of Experience: {years_of_experience}")
     salary = predict_salary(age, gender, education_level, job_title, years_of_experience)
     if salary:
         st.write(f"Predicted Salary: ${salary:,.2f}")
