@@ -38,4 +38,4 @@ if st.button("Predict Salary"):
     salary = predict_salary(age, gender, education_level, job_title, years_of_experience)
     st.write(f"Predicted Salary: ${salary:,.2f}")
 
-pip install streamlit joblib pandas scikit-learn
+pip install joblib
