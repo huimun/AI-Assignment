@@ -18,13 +18,13 @@ except Exception as e:
 
 # Function to make prediction
 def predict_salary(age, gender, education_level, job_title, years_of_experience):
-    # Adjust the column names to match what was used in training the model
+    # Use feature names that match what the model was trained with
     input_data = pd.DataFrame({
-        'age': [age],  # Ensure lowercase or match exact feature name
-        'gender': [gender],  # Ensure it matches what was used in the training
-        'education': [education_level],  # Adjust to match training data
-        'job_title': [job_title],  # Adjust to match the model's training data
-        'experience': [years_of_experience]  # Make sure this matches the model
+        'Age': [age],
+        'Gender': [gender],
+        'Education Level': [education_level],
+        'Job Title': [job_title],
+        'Years of Experience': [years_of_experience]
     })
     
     try:
@@ -50,4 +50,3 @@ if st.button("Predict Salary"):
     salary = predict_salary(age, gender, education_level, job_title, years_of_experience)
     if salary:
         st.write(f"Predicted Salary: ${salary:,.2f}")
-
