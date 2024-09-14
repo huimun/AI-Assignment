@@ -16,18 +16,26 @@ try:
 except Exception as e:
     st.error(f"Error loading the dataset: {e}")
 
+# Encoding for categorical features (ensure it matches the model's encoding)
+gender_map = {'Male': 0, 'Female': 1}
+education_level_map = {"Bachelor's": 0, "Master's": 1, "PhD": 2}
+
 # Function to make prediction
 def predict_salary(age, gender, education_level, job_title, years_of_experience):
-    # Use feature names that match what the model was trained with
-    input_data = pd.DataFrame({
-        'Age': [age],
-        'Gender': [gender],
-        'Education Level': [education_level],
-        'Job Title': [job_title],
-        'Years of Experience': [years_of_experience]
-    })
-    
     try:
+        # Convert categorical variables into numeric values
+        gender_encoded = gender_map[gender]
+        education_level_encoded = education_level_map[education_level]
+        
+        # Input data (ensure job title is handled if needed)
+        input_data = pd.DataFrame({
+            'Age': [age],
+            'Gender': [gender_encoded],
+            'Education Level': [education_level_encoded],
+            'Job Title': [job_title],  # You might need to encode Job Title as well if it's a known list
+            'Years of Experience': [years_of_experience]
+        })
+
         # Prediction using the loaded model
         salary_prediction = model.predict(input_data)
         return salary_prediction[0]
