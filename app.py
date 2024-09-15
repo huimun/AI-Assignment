@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 
 # List of unique job titles
 job_titles = [
@@ -42,6 +42,14 @@ education_level_map = {"Bachelor's": 0, "Master's": 1, "PhD": 2}
 label_encoder = LabelEncoder()
 label_encoder.fit(job_titles)
 
+# Initialize the scalers
+age_scaler = MinMaxScaler()
+experience_scaler = MinMaxScaler()
+
+# Fit the scalers based on the original data
+age_scaler.fit(data[['Age']])
+experience_scaler.fit(data[['Years of Experience']])
+
 # Function to make prediction
 def predict_salary(age, gender, education_level, job_title, years_of_experience):
     try:
@@ -49,14 +57,18 @@ def predict_salary(age, gender, education_level, job_title, years_of_experience)
         gender_encoded = gender_map[gender]
         education_level_encoded = education_level_map[education_level]
         job_title_encoded = label_encoder.transform([job_title])[0]  # Encode the selected job title
-        
+
+        # Scale the numerical features (age and years of experience)
+        age_scaled = age_scaler.transform([[age]])[0][0]  # Scale age
+        experience_scaled = experience_scaler.transform([[years_of_experience]])[0][0]  # Scale experience
+
         # Input data
         input_data = pd.DataFrame({
-            'Age': [age],
+            'Age': [age_scaled],  # Scaled Age
             'Gender': [gender_encoded],
             'Education Level': [education_level_encoded],
             'Job Title': [job_title_encoded],
-            'Years of Experience': [years_of_experience]
+            'Years of Experience': [experience_scaled]  # Scaled Years of Experience
         })
 
         # Prediction using the loaded model
